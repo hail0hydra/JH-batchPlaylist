@@ -71,7 +71,13 @@ ComSpec=C:\WINDOWS\system32\cmd.exe
 
 - A work around is to use `::` which is a coloned label, put you might have the risk of running into this label.
 
+
+<br>
+<br>
+<br>
+
 # Some New CMDs
+
 
 <br>
 
