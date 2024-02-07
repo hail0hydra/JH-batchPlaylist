@@ -71,6 +71,57 @@ ComSpec=C:\WINDOWS\system32\cmd.exe
 
 - A work around is to use `::` which is a coloned label, put you might have the risk of running into this label.
 
+---
+
+<br>
+<br>
+
+- `goto :eof` after a main function doesn't go back to _end of file_, but to the last place of execution. (TIP: think of it as _end of function_)
+
+
+<br>
+<br>
+
+- any variable within `:main` becomes a global variable and hence will be set in the terminal session calling the script.
+
+  - But the same thing with _local scopes_ (setlocal and endlocal) would not come on to the terminal session.
+
+  - `endlocal` acutally sort of deletes all the variables that it has seen so far.
+
+
+<br>
+<br>
+
+- setting up __local scope__ makes it hard to modify a variable's value by calling a function, as it will get deleted. We can return a processed variable as follows
+
+```cmd
+
+@echo off
+
+goto :main
+
+:add_one
+setlocal
+    echo    Performing ADD ONE on X...
+
+endlocal & set /a x=%x% + 1
+goto :eof
+
+:main
+setlocal
+    echo Main function is running...
+    echo Setting X to 1...
+    set /a x=1
+    
+    call :add_one
+
+    echo The value of X now is %x%
+endlocal
+goto :eof
+
+```
+
+- with the `endlocal & set /a x=%x% + 1` being kind of a return statement that works fine with _local scope_.
 
 <br>
 <br>
@@ -96,3 +147,9 @@ ComSpec=C:\WINDOWS\system32\cmd.exe
 7. `set /p` - for input.
 
 8. `goto` - to go to a label
+
+9. `call` - to call a function
+
+10. `%~n` - _n_ can be any number (1 tp infinity), this is how agruements in function are mentioned.
+
+11. `setlocal` and `endlocal` - use to create a localscope area.
